@@ -1,7 +1,7 @@
 import pygame, sys
+from bullet import Bullet
 
-
-def events(gun):
+def events(screen, gun, bullets):
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -13,6 +13,10 @@ def events(gun):
                  # chap tomonga
                  elif event.key == pygame.K_a:
                       gun.mleft = True
+                # uq otish
+                 elif event.key == pygame.K_SPACE:
+                      new_bullet = Bullet(screen, gun)
+                      bullets.add(new_bullet)
             elif event.type == pygame.KEYUP:
                  # ung tomonga
                  if event.key == pygame.K_d:
@@ -20,3 +24,13 @@ def events(gun):
                  # chap tomonga
                  elif event.key == pygame.K_a:
                       gun.mleft = False
+
+def update(bg_color, screen, gun, bullets):
+     """ekranni yangilash"""
+     
+     
+     screen.fill(bg_color)
+     for bullet in bullets.sprites():
+          bullet.draw()
+     gun.draw()
+     pygame.display.flip()

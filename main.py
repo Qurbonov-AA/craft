@@ -1,6 +1,7 @@
 # kerakli kutubxonalarni yuklaymiz
 import pygame, controls
 from gun import Gun 
+from pygame.sprite import Group
 
 
 run = True
@@ -12,14 +13,14 @@ def run():
     pygame.display.set_caption("kosmik himoyachi")
     bg_color = (0, 0, 0)
     gun = Gun(screen)
+    bullets = Group()
 
     while run:
         
-        controls.events(gun)
+        controls.events(screen, gun, bullets)
         gun.update()
-        screen.fill(bg_color)
-        gun.draw()
-        pygame.display.flip()
+        bullets.update()
+        controls.update(bg_color, screen, gun, bullets)
 
 
 
