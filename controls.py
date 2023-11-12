@@ -34,3 +34,11 @@ def update(bg_color, screen, gun, bullets):
           bullet.draw()
      gun.draw()
      pygame.display.flip()
+
+
+#uqlarni chiqib ketganini uchiramiz
+def remove_bullet(bullets):
+     bullets.update()
+     for bullet in bullets.copy():
+          if bullet.rect.bottom <= 0:
+               bullets.remove(bullet)
