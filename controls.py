@@ -61,8 +61,10 @@ def create_army(screen, inos):
                inos.add(ino)
 
 #uqlarni chiqib ketganini uchiramiz
-def remove_bullet(bullets):
+def remove_bullet(bullets,inos):
      bullets.update()
      for bullet in bullets.copy():
           if bullet.rect.bottom <= 0:
                bullets.remove(bullet)
+     # uq va uzga sayyoraliklar tuqnashsa uchiramiz
+     collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
