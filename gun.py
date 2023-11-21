@@ -32,3 +32,9 @@ class Gun():
             self.rect.centerx += 1
         if self.mleft and self.rect.left > 0:
             self.rect.centerx -= 1
+
+
+    def create_gun(self):
+        """pushkani qayta yarataish"""
+        self.center = self.screen_rect.center
+        

@@ -1,6 +1,7 @@
 import pygame, sys
 from bullet import Bullet
 from ino import Ino
+import time
 
 def events(screen, gun, bullets):
     for event in pygame.event.get():
@@ -26,6 +27,18 @@ def events(screen, gun, bullets):
                  elif event.key == pygame.K_a:
                       gun.mleft = False
 
+
+#pushkani uchirish
+def gun_kill(stats, screen, gun, inos, bullets):
+     stats.guns_left -= 1
+     inos.empty()
+     bullets.empty()
+     create_army(screen, inos)
+     gun.create_gun()
+     time.sleep(2)
+
+
+
 def update(bg_color, screen, gun, ino, bullets):
      """ekranni yangilash"""
      
@@ -37,9 +50,11 @@ def update(bg_color, screen, gun, ino, bullets):
      ino.draw(screen)
      pygame.display.flip()
 
-def update_ino(inos):
+def update_ino(inos, stats, screen, gun, bullets):
      """uzga sayyoraliklarni qayta chizadi"""
      inos.update()
+     if pygame.sprite.spritecollideany(gun, inos):
+          gun_kill(stats, screen, gun, inos, bullets)
 
 
 def create_army(screen, inos):
@@ -59,6 +74,11 @@ def create_army(screen, inos):
                ino.rect.x = ino.x
                ino.rect.y = ino.rect.height + ino.rect.height * row_number
                inos.add(ino)
+
+
+
+
+
 
 #uqlarni chiqib ketganini uchiramiz
 def remove_bullet(bullets,inos):
