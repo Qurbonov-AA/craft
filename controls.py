@@ -55,6 +55,7 @@ def update_ino(inos, stats, screen, gun, bullets):
      inos.update()
      if pygame.sprite.spritecollideany(gun, inos):
           gun_kill(stats, screen, gun, inos, bullets)
+     inos_check(stats, screen, gun, inos, bullets)
 
 
 def create_army(screen, inos):
@@ -76,15 +77,25 @@ def create_army(screen, inos):
                inos.add(ino)
 
 
+def inos_check(stats, screen, gun, inos, bullets):
+     """uzga sayyoraliklar ekranni pastki qismiga tegsa"""
 
+     screen_rect = screen.get_rect()
+     for ino in inos.sprites():
+          if ino.rect.bottom >= screen_rect.bottom:
+               gun_kill(stats, screen, gun, inos, bullets)
+               break
 
 
 
 #uqlarni chiqib ketganini uchiramiz
-def remove_bullet(bullets,inos):
+def remove_bullet(screen, bullets,inos):
      bullets.update()
      for bullet in bullets.copy():
           if bullet.rect.bottom <= 0:
                bullets.remove(bullet)
      # uq va uzga sayyoraliklar tuqnashsa uchiramiz
      collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
+     if len(inos) == 0:
+          bullets.empty()
+          create_army(screen, inos)

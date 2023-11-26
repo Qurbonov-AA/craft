@@ -25,8 +25,8 @@ def run():
         controls.events(screen, gun, bullets)
         gun.update()
         bullets.update()
-        controls.update(bg_color, screen, gun, inos, bullets)
-        controls.remove_bullet(bullets,inos)
+        controls.update(bg_color, screen, gun, inos, bullets)        
+        controls.remove_bullet(screen,bullets,inos)
         controls.update_ino(inos, stats, screen, gun,  bullets)
 
 
