@@ -1,4 +1,5 @@
 import pygame
+from os import path
 
 
 # uqlar klasi
@@ -8,7 +9,9 @@ class Bullet(pygame.sprite.Sprite):
         """stvolni ustida uq yaratamiz"""
         super(Bullet, self).__init__()
         self.screen = screen
-        self.rect = pygame.Rect(0, 0, 10, 20)
+        self.image = pygame.image.load(path.join('img', 'bullet.png'))
+        self.rect = self.image.get_rect()
+        self.screen_rect = screen.get_rect()
         self.color = (168, 230, 29)
         self.speed = 2.5
         self.rect.centerx = gun.rect.centerx
@@ -25,4 +28,5 @@ class Bullet(pygame.sprite.Sprite):
     def draw(self):
         """uqni ekranga chizamiz"""
 
-        pygame.draw.rect(self.screen, self.color, self.rect)
+        self.screen.blit(self.image, self.rect)
+        #pygame.draw.rect(self.screen, self.color, self.rect)
