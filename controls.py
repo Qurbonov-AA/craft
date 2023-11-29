@@ -36,6 +36,9 @@ def gun_kill(stats, screen, gun, inos, bullets):
      create_army(screen, inos)
      gun.create_gun()
      time.sleep(2)
+     
+     if  stats.guns_left == 0:
+          sys.exit()
 
 
 
