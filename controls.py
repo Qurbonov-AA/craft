@@ -30,23 +30,24 @@ def events(screen, gun, bullets):
 
 #pushkani uchirish
 def gun_kill(stats, screen, gun, inos, bullets):
-     stats.guns_left -= 1
-     inos.empty()
-     bullets.empty()
-     create_army(screen, inos)
-     gun.create_gun()
-     time.sleep(2)
+     if stats.guns_left > 0:
+          stats.guns_left -= 1
+          inos.empty()
+          bullets.empty()
+          create_army(screen, inos)
+          gun.create_gun()
+          time.sleep(1.5)
      
-     if  stats.guns_left == 0:
+     else:
+          stats.run_game = False
           sys.exit()
 
 
-
-def update(bg_color, screen, gun, ino, bullets):
+def update(bg_color, screen, stats, sc, gun, ino, bullets):
      """ekranni yangilash"""
-     
-     
+          
      screen.fill(bg_color)
+     sc.draw_score()
      for bullet in bullets.sprites():
           bullet.draw()
      gun.draw()
@@ -92,13 +93,29 @@ def inos_check(stats, screen, gun, inos, bullets):
 
 
 #uqlarni chiqib ketganini uchiramiz
-def remove_bullet(screen, bullets,inos):
+def remove_bullet(screen, stats, sc, bullets,inos):
      bullets.update()
      for bullet in bullets.copy():
           if bullet.rect.bottom <= 0:
                bullets.remove(bullet)
      # uq va uzga sayyoraliklar tuqnashsa uchiramiz
      collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
+     if collisions:
+          for inos in collisions.values():
+               stats.score += 10 * len(inos)
+          sc.image_score()
+          check_high_score(stats, sc)
      if len(inos) == 0:
           bullets.empty()
           create_army(screen, inos)
+
+def check_high_score(stats, sc):
+     """yangi rekordlarni tekshirish"""
+
+     if stats.score > stats.high_score:
+          stats.high_score = stats.score
+          sc.image_high_score()
+          with open('records.txt', 'w') as f:
+               f.write(str(stats.high_score))
+
+
